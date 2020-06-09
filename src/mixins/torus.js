@@ -7,7 +7,7 @@ export default {
         baseUrl:
           process.env.TORUS_SW_URL ||
           window.location.origin + '/serviceworker',
-        GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || ''
+        GOOGLE_CLIENT_ID: '115303231100-uh4jb6m8efmsf2l89k5iqi23l5uni8e6.apps.googleusercontent.com'
       });
       await torusdirectsdk.init();
       const loginDetails = await torusdirectsdk.triggerLogin(
