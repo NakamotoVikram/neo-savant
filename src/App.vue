@@ -73,7 +73,6 @@ import { animateCSS } from "./utils/ui";
 
 import { Zilliqa } from "@zilliqa-js/zilliqa";
 import ZilPayMixin from '@/mixins/zilpay';
-import TorusMixin from '@/mixins/torus';
 
 export default {
   name: "App",
@@ -85,7 +84,7 @@ export default {
       bottomPanel: true
     };
   },
-  mixins: [ZilPayMixin, TorusMixin],
+  mixins: [ZilPayMixin],
   components: {
     FilesList,
     ContractsList,
@@ -215,7 +214,7 @@ export default {
   top: 0;
   right: 30px; // 50px RightSidebar - 20px scroll sidebar
   height: 100%;
-  width: 500px;
+  width: 600px;
   min-width: 450px;
   min-height: 350px;
   z-index: 98;
