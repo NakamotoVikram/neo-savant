@@ -4,15 +4,17 @@ export default {
   methods: {
     async connectTorus() {
       const torusdirectsdk = new TorusSdk({
-        baseUrl:
-          process.env.TORUS_SW_URL ||
-          window.location.origin + '/serviceworker',
-        GOOGLE_CLIENT_ID: '115303231100-uh4jb6m8efmsf2l89k5iqi23l5uni8e6.apps.googleusercontent.com'
+        baseUrl: 'http://localhost:8080/serviceworker',
+        network: 'ropsten',
+        enableLogging: true,
+        FACEBOOK_CLIENT_ID: '2554219104599979',
+        proxyContractAddress: '0x4023d2a0D330bF11426B12C6144Cfb96B7fa6183',
+        GOOGLE_CLIENT_ID: '74915647456-dmjtvi9heh9h944ni2iadabio9kaqd86.apps.googleusercontent.com'
       });
       await torusdirectsdk.init();
       const loginDetails = await torusdirectsdk.triggerLogin(
         'google',
-        'google-neo-ide'
+        'google'
       );
 
       console.log(loginDetails);
