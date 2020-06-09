@@ -73,6 +73,7 @@ import { animateCSS } from "./utils/ui";
 
 import { Zilliqa } from "@zilliqa-js/zilliqa";
 import ZilPayMixin from '@/mixins/zilpay';
+import TorusMixin from '@/mixins/torus';
 
 export default {
   name: "App",
@@ -84,7 +85,7 @@ export default {
       bottomPanel: true
     };
   },
-  mixins: [ZilPayMixin],
+  mixins: [ZilPayMixin, TorusMixin],
   components: {
     FilesList,
     ContractsList,

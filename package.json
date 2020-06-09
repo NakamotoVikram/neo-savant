@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@ledgerhq/hw-transport-u2f": "^5.13.1",
+    "@toruslabs/torus-direct-web-sdk": "^2.0.0",
     "@zilliqa-js/contract": "^0.9.0",
     "@zilliqa-js/crypto": "^0.8.8",
     "@zilliqa-js/util": "^0.8.8",
