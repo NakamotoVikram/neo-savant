@@ -368,6 +368,9 @@ export default {
         case "privatekey":
           this.handlePrivateKeySign(tx);
           break;
+        case "torus":
+          this.handlePrivateKeySign(tx);
+          break;
         case "zilpay":
           this.handleZilPaySign(tx);
           break;

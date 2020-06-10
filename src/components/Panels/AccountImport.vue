@@ -384,19 +384,55 @@ export default {
         this.error = error.message;
       }
     },
-    handleConnectTorus() {
+    async handleConnectTorus() {
       this.error = null;
       this.loading = 'Waiting for access torus...';
 
+      if (!this.network.url) {
+        this.error = 'Please select the network.';
+        this.loading = false;
+        return null;
+      }
+
+      if (this.zilliqa === undefined) {
+        this.zilliqa = new Zilliqa(this.network.url);
+      }
+
       try {
-        this.connectTorus();
+        const privateKey = await this.connectTorus();
+        const address = this.zilliqa.wallet.addByPrivateKey(privateKey);
+        let balance = await this.zilliqa.blockchain.getBalance(address);
+
+        if (balance.error && balance.error.code === -5) {
+          balance = 0;
+        } else {
+          const zils = units.fromQa(
+            new BN(balance.result.balance),
+            units.Units.Zil
+          );
+          balance = zils;
+        }
+
+        await this.$store.dispatch("accounts/AddAccount", {
+          address,
+          keystore: privateKey,
+          type: "torus"
+        });
+        this.$notify({
+          group: "scilla",
+          type: "success",
+          position: "bottom right",
+          title: "Accounts",
+          text: "Account successfully imported"
+        });
+        window.EventBus.$emit("refresh-balance");
       } catch (err) {
         this.error = err.message;
       }
 
-      this.loading = false;
-      this.importAccount = false;
       window.EventBus.$emit("close-right-panel");
+      this.importAccount = false;
+      this.loading = false;
     }
   }
 };
