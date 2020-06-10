@@ -1,23 +1,21 @@
 import TorusSdk from '@toruslabs/torus-direct-web-sdk';
 
+const clientId = process.env.GOOGLE_CLIENT_ID || '876733105116-i0hj3s53qiio5k95prpfmj0hp0gmgtor.apps.googleusercontent.com';
+
 export default {
   methods: {
     async connectTorus() {
       const torusdirectsdk = new TorusSdk({
-        baseUrl: 'http://localhost:8080/serviceworker',
-        network: 'ropsten',
-        enableLogging: true,
-        FACEBOOK_CLIENT_ID: '2554219104599979',
-        proxyContractAddress: '0x4023d2a0D330bF11426B12C6144Cfb96B7fa6183',
-        GOOGLE_CLIENT_ID: '74915647456-dmjtvi9heh9h944ni2iadabio9kaqd86.apps.googleusercontent.com'
+        baseUrl: `${window.location.origin}/serviceworker`
       });
       await torusdirectsdk.init();
-      const loginDetails = await torusdirectsdk.triggerLogin(
-        'google',
-        'google'
-      );
+      const loginDetails = await torusdirectsdk.triggerLogin({
+        clientId,
+        typeOfLogin: 'google',
+        verifier: 'google'
+      });
 
-      console.log(loginDetails);
+      return loginDetails.privateKey;
     }
   }
 };
