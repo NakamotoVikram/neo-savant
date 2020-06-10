@@ -27,3 +27,11 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### Torus
+
+mixin: @/mixins/torus.js
+
+END:
+* GOOGLE_CLIENT_ID: OAuth 2.0 Client ID [see](https://console.developers.google.com/apis/credentials).
