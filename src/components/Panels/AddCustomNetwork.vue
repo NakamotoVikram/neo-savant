@@ -2,45 +2,61 @@
   <div class="panel-content">
     <div class="header">
       <div class="title">Add Custom Network</div>
-      <img src="@/assets/close-color.svg" @click="handleClose" class="close-button-new" />
+      <img
+        src="@/assets/close-color.svg"
+        @click="handleClose"
+        class="close-button-new"
+      />
     </div>
     <div class="body p-4">
       <div class="account-selector">
         <div class="deploy-form" v-if="!loading && !success">
           <div class="row mb-4">
-            <div class="col-12">
+            <div class="col-12 mb-4">
               <label>Network name</label>
               <input type="text" v-model="name" class="form-control" />
             </div>
-            <div class="col-12">
+            <div class="col-12 mb-4">
               <label>Network address</label>
               <input type="text" v-model="url" class="form-control" />
             </div>
-            <div class="col-12">
+            <div class="col-12 mb-4">
               <label>Faucet address</label>
               <input type="text" v-model="faucet" class="form-control" />
             </div>
-            <div class="col-12">
+            <div class="col-12 mb-4">
               <label>Chain ID</label>
-              <input type="text" v-model.number="chainId" class="form-control" />
+              <input
+                type="text"
+                v-model.number="chainId"
+                class="form-control"
+              />
             </div>
-            <div class="col-12">
+            <div class="col-12 mb-4">
               <label>MSG VERSION</label>
-              <input type="text" v-model.number="msgVersion" class="form-control" />
+              <input
+                type="text"
+                v-model.number="msgVersion"
+                class="form-control"
+              />
             </div>
           </div>
 
           <div class="row">
             <div class="col-12 mb-4" v-if="!loading">
-              <button class="btn btn-secondary mr-2" @click="handleImport">Submit</button>
+              <button class="btn btn-secondary mr-2" @click="handleImport">
+                Submit
+              </button>
             </div>
           </div>
         </div>
 
-        <div class="alert alert-info" v-if="loading">{{loading}}</div>
-        <div class="alert alert-danger" v-if="error">{{error}}</div>
+        <div class="alert alert-info" v-if="loading">{{ loading }}</div>
+        <div class="alert alert-danger" v-if="error">{{ error }}</div>
 
-        <div class="alert alert-success" v-if="success">Network successfully added.</div>
+        <div class="alert alert-success" v-if="success">
+          Network successfully added.
+        </div>
       </div>
     </div>
   </div>
@@ -52,9 +68,9 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      name: "",
-      url: "",
-      faucet: "",
+      name: undefined,
+      url: undefined,
+      faucet: undefined,
       chainId: 1,
       msgVersion: 1,
       loading: false,
@@ -78,13 +94,18 @@ export default {
       this.address = "";
       this.name = "";
     },
-    async handleImport() {
-      await this.$store
+    handleImport() {
+      if (!this.name || !this.faucet || !this.url) {
+        return;
+      }
+
+      this.$store
         .dispatch("networks/AddNetwork", {
           name: this.name,
           url: this.url,
           faucet: this.faucet,
           chainId: parseInt(this.chainId),
+          type: "custom",
           msgVersion: parseInt(this.msgVersion),
         })
         .then(() => {
@@ -95,6 +116,16 @@ export default {
             position: "bottom right",
             title: "Accounts",
             text: "Network successfully imported.",
+          });
+          this.loading = false;
+        })
+        .catch((err) => {
+          this.$notify({
+            group: "scilla",
+            type: "error",
+            position: "bottom right",
+            title: "Accounts",
+            text: err.message,
           });
           this.loading = false;
         });

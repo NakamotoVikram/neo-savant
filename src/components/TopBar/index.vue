@@ -20,6 +20,12 @@
           </ul>
         </li>
         <explorer-link />
+        <a
+          href="#"
+          v-if="isTestnetOrIsolatedServer"
+          @click="handleOpenFaucet"
+          class="ml-3"
+        >Zilliqa Faucet</a>
       </div>
       <div class="details d-flex">
         <account-balance />
@@ -36,19 +42,34 @@ import AccountSelector from "./AccountSelector";
 import AccountBalance from "./AccountBalance";
 import ExplorerLink from "../UI/ExplorerLink";
 
+import { mapGetters } from "vuex";
+
 export default {
   name: "TopBar",
   components: {
     NetworkSelector,
     AccountSelector,
     AccountBalance,
-    ExplorerLink
+    ExplorerLink,
+  },
+  computed: {
+    ...mapGetters("networks", { selectedNetwork: "selected" }),
+    isTestnetOrIsolatedServer() {
+      if (this.selectedNetwork.url !== "https://api.zilliqa.com") {
+        return true;
+      }
+
+      return false;
+    },
   },
   methods: {
     handleOpenTools(toolName) {
       window.EventBus.$emit("open-tools", toolName);
-    }
-  }
+    },
+    handleOpenFaucet() {
+      window.EventBus.$emit("open-faucet");
+    },
+  },
 };
 </script>
 
