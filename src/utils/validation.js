@@ -1,14 +1,13 @@
 import { validation } from "@zilliqa-js/util";
 
 const getParamType = ({ type }) => {
-    const regex = /(?<List>List (.+))|(?<ByStr20>ByStr20)|(?<String>String)|(?<ByStr>ByStr)(\d{1,})?|(?<Uint>Uint)\d{1,}|(?<Int>Int)\d{1,}|(?<BNum>BNum)/;
+    const regex = /(?<List>List (.+))|(?<ByStr20>ByStr20)|(?<String>String)|(?<ByStr>ByStr)(\d{1,})?|(?<Uint>Uint)\d{1,}|(?<Int>Int)\d{1,}|(?<BNum>BNum)|(?<Pair>Pair)/;
     
     const res = type.match(regex);
     let foundType = null;
 
     if (res !== null) {
         const results = res.groups;
-
 
         for (let key in results) {
             if (results[key] !== undefined) {

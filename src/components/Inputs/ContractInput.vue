@@ -13,7 +13,7 @@
       :class="{ 'has-errors': error }"
       ref="paramValue"
       @input="updateData"
-      v-if="inputType !== 'List' && inputType !== null"
+      v-if="inputType !== 'List' && inputType !== 'Pair' && inputType !== null"
     />
     <ace-editor
       :value="pvalue"
