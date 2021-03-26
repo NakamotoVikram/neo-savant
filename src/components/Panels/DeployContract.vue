@@ -90,7 +90,7 @@ import axios from "axios";
 import { validateParams } from "@/utils/validation.js";
 import ZilPayMixin from "@/mixins/zilpay";
 
-const MAX_TRIES = 120;
+const MAX_TRIES = 240;
 
 export default {
   mixins: [ZilPayMixin],
